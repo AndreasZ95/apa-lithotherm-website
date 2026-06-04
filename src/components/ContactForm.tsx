@@ -2,34 +2,42 @@
 
 import { FormEvent, useState } from 'react'
 
-type ContactFormProps = {
-  recipientEmail?: string
-}
-
-export function ContactForm({ recipientEmail = 'lithotherm@hotmail.com' }: ContactFormProps) {
+export function ContactForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState('')
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    setIsSubmitting(true)
+    setStatus('')
 
-    const form = new FormData(event.currentTarget)
-    const name = String(form.get('name') || '').trim()
-    const phone = String(form.get('phone') || '').trim()
-    const email = String(form.get('email') || '').trim()
-    const message = String(form.get('message') || '').trim()
+    try {
+      const form = event.currentTarget
+      const formData = new FormData(form)
+      const response = await fetch('/api/contact', {
+        body: JSON.stringify({
+          email: String(formData.get('email') || ''),
+          message: String(formData.get('message') || ''),
+          name: String(formData.get('name') || ''),
+          phone: String(formData.get('phone') || ''),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
 
-    const subject = `Website enquiry${name ? ` from ${name}` : ''}`
-    const body = [
-      `Name: ${name || '-'}`,
-      `Phone: ${phone || '-'}`,
-      `Email: ${email || '-'}`,
-      '',
-      'Message:',
-      message || '-',
-    ].join('\n')
+      if (!response.ok) {
+        throw new Error('The message could not be sent.')
+      }
 
-    window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setStatus(`Opening email to ${recipientEmail}`)
+      form.reset()
+      setStatus('Thank you. Your message has been sent.')
+    } catch {
+      setStatus('Sorry, the message could not be sent. Please call or email us directly.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -38,8 +46,8 @@ export function ContactForm({ recipientEmail = 'lithotherm@hotmail.com' }: Conta
       <input name="phone" placeholder="Phone" type="tel" />
       <input name="email" placeholder="Email" type="email" required />
       <textarea name="message" placeholder="Message" rows={6} required />
-      <button className="button primary" type="submit">
-        Send
+      <button className="button primary" disabled={isSubmitting} type="submit">
+        {isSubmitting ? 'Sending...' : 'Send'}
       </button>
       {status && <p className="form-status">{status}</p>}
     </form>

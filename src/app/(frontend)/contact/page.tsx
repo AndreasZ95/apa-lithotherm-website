@@ -27,7 +27,7 @@ export default async function ContactPage() {
     <section className="page two-column">
       <div>
         <h1>Contact</h1>
-        <ContactForm recipientEmail="lithotherm@hotmail.com" />
+        <ContactForm />
       </div>
       <aside className="info-panel">
         {settings.phone && <p><strong>Phone</strong><br />{settings.phone}</p>}
