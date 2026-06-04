@@ -3,25 +3,16 @@ import { ContactForm } from '@/components/ContactForm'
 
 export const dynamic = 'force-dynamic'
 
-function mapSearchUrl(address?: string | null) {
-  if (!address) return ''
-
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-}
-
-function mapEmbedUrl(address?: string | null) {
-  if (!address) return ''
-
-  return `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`
-}
+const apaMapUrl = 'https://maps.app.goo.gl/UR471u6n5JUtXseg8'
+const apaMapEmbedUrl = 'https://www.google.com/maps?q=35.0235842,34.0131854&z=17&output=embed'
 
 export default async function ContactPage() {
   const payload = await getPayloadClient()
   const settings = await payload.findGlobal({
     slug: 'site-settings',
   })
-  const directionsUrl = settings.googleMapUrl || mapSearchUrl(settings.address)
-  const embedUrl = mapEmbedUrl(settings.address)
+  const directionsUrl = apaMapUrl
+  const embedUrl = apaMapEmbedUrl
 
   return (
     <section className="page two-column">

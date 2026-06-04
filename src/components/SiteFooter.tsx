@@ -1,10 +1,6 @@
 import { getPayloadClient } from '@/lib/payload'
 
-function mapSearchUrl(address?: string | null) {
-  if (!address) return ''
-
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-}
+const apaMapUrl = 'https://maps.app.goo.gl/UR471u6n5JUtXseg8'
 
 export async function SiteFooter() {
   const payload = await getPayloadClient()
@@ -12,7 +8,7 @@ export async function SiteFooter() {
     slug: 'site-settings',
   })
   const year = new Date().getFullYear()
-  const directionsUrl = settings.googleMapUrl || mapSearchUrl(settings.address)
+  const directionsUrl = apaMapUrl
 
   return (
     <footer className="site-footer">
