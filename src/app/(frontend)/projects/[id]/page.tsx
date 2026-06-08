@@ -38,7 +38,9 @@ export default async function ProjectPage({ params }: PageProps) {
         <h1>{project.title}</h1>
         <p>{project.description}</p>
       </div>
-      <GalleryCarousel photos={galleryPhotos} title={project.title} />
+      <div className="detail-gallery">
+        <GalleryCarousel photos={galleryPhotos} title={project.title} />
+      </div>
     </section>
   )
 }

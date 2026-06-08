@@ -15,6 +15,12 @@ export function imageUrl(image: unknown): string | null {
 
 export function relationTitle(relation: unknown): string {
   if (relation && typeof relation === 'object' && 'name' in relation && typeof relation.name === 'string') {
+    if ('parent' in relation) {
+      const parentName = relationTitle(relation.parent)
+
+      return parentName ? `${parentName} / ${relation.name}` : relation.name
+    }
+
     return relation.name
   }
 

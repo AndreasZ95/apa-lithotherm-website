@@ -41,7 +41,9 @@ export default async function ProductPage({ params }: PageProps) {
           Contact us for more info
         </a>
       </div>
-      <GalleryCarousel photos={galleryPhotos} title={product.title} />
+      <div className="detail-gallery">
+        <GalleryCarousel photos={galleryPhotos} title={product.title} />
+      </div>
     </section>
   )
 }

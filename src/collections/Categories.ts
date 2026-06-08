@@ -3,7 +3,12 @@ import type { CollectionConfig } from 'payload'
 export const Categories: CollectionConfig = {
   slug: 'categories',
   admin: {
-    defaultColumns: ['name', 'type'],
+    components: {
+      edit: {
+        SaveButton: '@/components/admin/SaveAndCreateNextButton#SaveAndCreateNextButton',
+      },
+    },
+    defaultColumns: ['name', 'type', 'parent'],
     useAsTitle: 'name',
   },
   access: {
@@ -30,6 +35,20 @@ export const Categories: CollectionConfig = {
         },
       ],
       required: true,
+    },
+    {
+      name: 'parent',
+      type: 'relationship',
+      admin: {
+        description: 'Optional. Select a parent category to make this category a subcategory.',
+      },
+      filterOptions: ({ data }) => ({
+        type: {
+          equals: data?.type || 'product',
+        },
+      }),
+      label: 'Parent category',
+      relationTo: 'categories',
     },
   ],
 }

@@ -182,6 +182,10 @@ export interface Category {
   id: number;
   name: string;
   type: 'product' | 'project';
+  /**
+   * Optional. Select a parent category to make this category a subcategory.
+   */
+  parent?: (number | null) | Category;
   updatedAt: string;
   createdAt: string;
 }
@@ -348,6 +352,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   type?: T;
+  parent?: T;
   updatedAt?: T;
   createdAt?: T;
 }

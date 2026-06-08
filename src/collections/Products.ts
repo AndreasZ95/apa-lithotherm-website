@@ -3,6 +3,11 @@ import type { CollectionConfig } from 'payload'
 export const Products: CollectionConfig = {
   slug: 'products',
   admin: {
+    components: {
+      edit: {
+        SaveButton: '@/components/admin/SaveAndCreateNextButton#SaveAndCreateNextButton',
+      },
+    },
     defaultColumns: ['title', 'category', 'published', 'updatedAt'],
     useAsTitle: 'title',
   },

@@ -1,5 +1,6 @@
 import React from 'react'
 import { SiteFooter } from '@/components/SiteFooter'
+import { SiteHeader } from '@/components/SiteHeader'
 import './styles.css'
 
 export const dynamic = 'force-dynamic'
@@ -15,18 +16,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <header className="site-header">
-          <a className="brand" href="/">
-            <img alt="A.P.A LithoTherm logo" src="/logo.jpg" />
-            <span>A.P.A LithoTherm</span>
-          </a>
-          <nav className="nav">
-            <a href="/products">Products</a>
-            <a href="/projects">Projects</a>
-            <a href="/contact">Contact</a>
-            <a href="/who-we-are">Who We Are</a>
-          </nav>
-        </header>
+        <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
       </body>
